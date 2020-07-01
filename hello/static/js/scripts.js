@@ -18,6 +18,7 @@ var layer = new Konva.Layer({
 stage.add(layer);
 
 var group = new Konva.Group({
+  draggable: true,
   //x: 30,
   //rotation: 10,
   //scaleX: 1.5,
@@ -68,23 +69,39 @@ stage.on('wheel', (e) => {
   stage.batchDraw();
 });
 stage.on('dblclick', function () {
+  var combined = new Konva.Group({
+    draggable: true,
+  });
+  var txtobj = new Konva.Group({
+    //draggable: true,
+  });
+  var shpobj = new Konva.Group({
+    //draggable: true,
+  });
+  layer.add(txtobj);
+  layer.add(shpobj);
+  layer.add(combined);
   var pos = getRelativePointerPosition(group);
   var textbox = new Konva.Text({
     text: 'Text',
     fontSize: 15,
     fill: 'yellow',
-    x: pos.x,
-    y: pos.y,
-    draggable: true,
+    x: pos.x - 15,
+    y: pos.y - 5,
+    //draggable: true,
   });
   var shape = new Konva.Circle({
     x: pos.x,
     y: pos.y,
     fill: 'white',
-    radius: 20,
-    draggable: true,
+    radius: 30,
+    //draggable: true,
   });
-  group.add(textbox);
-  group.add(shape);
+  
+  txtobj.add(textbox);
+  shpobj.add(shape);
+  combined.add(txtobj);
+  combined.add(shpobj);
+  txtobj.moveToTop();
   layer.batchDraw();
 });
