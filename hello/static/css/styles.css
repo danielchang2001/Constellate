@@ -3,8 +3,12 @@ body {
     padding: 0;
     overflow: hidden;
     background-color: #0f1018;
-  }
-
+    
+}
+head {
+  height: 100vh;
+  cursor: url('cursor.png');
+}
 #thesidenav a {
   position: absolute;
   left: -80px;

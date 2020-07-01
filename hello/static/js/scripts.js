@@ -17,6 +17,7 @@ var layer = new Konva.Layer({
 });
 stage.add(layer);
 
+
 var group = new Konva.Group({
   draggable: true,
   //x: 30,
