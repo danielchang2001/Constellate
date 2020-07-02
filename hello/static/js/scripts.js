@@ -84,9 +84,9 @@ stage.on('dblclick', function () {
   layer.add(combined);
   var pos = getRelativePointerPosition(group);
   var textbox = new Konva.Text({
-    text: 'Text',
+    text: 'Txt',
     fontSize: 15,
-    fill: 'yellow',
+    fill: 'black',
     x: pos.x - 15,
     y: pos.y - 5,
     //draggable: true,
