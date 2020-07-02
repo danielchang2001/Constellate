@@ -19,7 +19,7 @@ stage.add(layer);
 
 
 var group = new Konva.Group({
-  draggable: true,
+  //draggable: false,
   //x: 30,
   //rotation: 10,
   //scaleX: 1.5,
@@ -106,3 +106,31 @@ stage.on('dblclick', function () {
   txtobj.moveToTop();
   layer.batchDraw();
 });
+/*
+combined.on('click', () => {
+  var textPostion = textbox.getAbsolutePosition();
+  var stageBox = stage.container().getBoundingClientRect();
+  var areaPostion = {
+    x: stageBox.left + textPosition.x,
+    y: stageBox.top + textPosition.y,
+  };
+  var textarea = document.createElement('textarea');
+  document.body.appendChild(textarea);
+
+  textarea.value = textbox.text();
+  textarea.style.position = 'absolute';
+  textarea.style.top = areaPosition.y + 'px';
+  textarea.style.left = areaPosition.x + 'px';
+  textarea.style.width = textbox.width();
+
+  textarea.focus();
+
+  textarea.addEventListener('keydown', function (e) {
+    if (e.keyCode === 13) {
+      textbox.text(textarea.value);
+      layer.draw();
+      document.body.removeChild(textarea);
+    }
+  });
+});
+*/
