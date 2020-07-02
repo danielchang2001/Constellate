@@ -43,6 +43,7 @@ function getRelativePointerPosition(node) {
   // now we can find relative point
   return transform.point(pos);
 }
+
 var scaleBy = 1.05;
 stage.on('wheel', (e) => {
   e.evt.preventDefault();
