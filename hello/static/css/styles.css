@@ -1,6 +1,41 @@
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #0f1018;
-  }
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0f1018;
+  
+}
+head {
+height: 100vh;
+cursor: url('cursor.png');
+}
+#thesidenav a {
+position: absolute;
+left: -80px;
+transition: 0.3s;
+padding: 15px;
+width: 100px;
+text-decoration: none;
+font-size: 20px;
+color: white;
+border-radius: 0 5px 5px 0;
+}
+
+#thesidenav a:hover {
+left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+#option1 {
+top: 20px;
+background-color: #4CAF50;
+}
+
+#option2 {
+top: 80px;
+background-color: #2196F3; /* Blue */
+}
+
+#option3 {
+top: 140px;
+background-color: #f44336; /* Red */
+}
