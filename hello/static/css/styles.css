@@ -2,13 +2,15 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #0f1018;
-  
+  background-color: grey;
+  /* background-color: #0f1018;  */
 }
+
 head {
 height: 100vh;
 cursor: url('cursor.png');
 }
+
 #thesidenav a {
 position: absolute;
 left: -80px;
@@ -25,17 +27,17 @@ border-radius: 0 5px 5px 0;
 left: 0; /* On mouse-over, make the elements appear as they should */
 }
 
-#option1 {
+#square {
 top: 20px;
 background-color: #4CAF50;
 }
 
-#option2 {
+#circle {
 top: 80px;
 background-color: #2196F3; /* Blue */
 }
 
-#option3 {
+#line {
 top: 140px;
 background-color: #f44336; /* Red */
 }
