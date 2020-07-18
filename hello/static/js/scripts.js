@@ -75,6 +75,8 @@ function createShape(shapeID) {
   window.idString = shapeID;
 }
 
+increasingID = 0;
+
 stage.on('dblclick', function () {
   var combined = new Konva.Group({
     draggable: true,
@@ -98,23 +100,29 @@ stage.on('dblclick', function () {
     //draggable: true,
   });
   if (idString == 'square') {
+    stringID = 'shape' + increasingID;
     var shape = new Konva.Rect({
       x: pos.x,
       y: pos.y,
       width: 60,
       height: 60,
       fill: 'white',
-      //draggable: true,
+      id: stringID,
+      draggable: true,
     });
+    increasingID++;
   }
   else if (idString == 'circle') {
+    stringID = 'shape' + increasingID;
     var shape = new Konva.Circle({
       x: pos.x,
       y: pos.y,
       fill: 'white',
       radius: 30,
-      //draggable: true,
+      id: stringID,
+      draggable: true,
     });
+    increasingID++;
   }
   
   txtobj.add(textbox);
@@ -124,119 +132,68 @@ stage.on('dblclick', function () {
   txtobj.moveToTop();
   layer.batchDraw();
 });
-
 // question: how to make text move with shape
+shapeCounter = 0;
 
 // if a shape is clicked:
-layer.on('click', function(){
-  var txtobj2 = new Konva.Group({
-    //draggable: true,
-  });
-  var userInput = window.prompt("type whatever");
-  var posi = getRelativePointerPosition(layer);
-  var textInShape = new Konva.Text({
-    text: userInput,
-    fontSize: 15,
-    fill: 'black',
-    x: posi.x,
-    y: posi.y,
-    //draggable: true,
-  });
-  layer.add(textInShape);
-  layer.batchDraw();
+var arrayOfShapes = [];
+
+layer.on('click', function(e){
+  
+  // var txtobj2 = new Konva.Group({
+  //   //draggable: true,
+  // });
+  // var userInput = window.prompt("type whatever");
+  // var posi = getRelativePointerPosition(layer);
+  // var textInShape = new Konva.Text({
+  //   text: userInput,
+  //   fontSize: 15,
+  //   fill: 'black',
+  //   x: posi.x,
+  //   y: posi.y,
+  //   //draggable: true,
+  // });
+  // layer.add(textInShape);
+  // layer.batchDraw();
+  var selectedID = e.target.attrs.id;
+  if (shapeCounter == 0) {
+    var Shape1 = stage.findOne("#" + selectedID);
+    arrayOfShapes.push(Shape1);
+    shapeCounter++;
+  }
+  else {
+    var Shape1 = arrayOfShapes[0];
+    arrayOfShapes = [];
+    var Shape2 = stage.findOne("#" + selectedID);
+    shapeCounter = 0;
+
+    var arrow = new Konva.Arrow({
+      points: [Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()],
+      pointerLength: 10,
+      pointerWidth: 10,
+      fill: 'black',
+      stroke: 'black',
+      strokeWidth: 4
+    });
+
+    function adjustPoint(e){
+      var p=[Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()];
+      arrow.setPoints(p);
+      layer.draw();
+    }
+
+    Shape1.on('dragmove', adjustPoint);
+
+    Shape2.on('dragmove', adjustPoint);
+    layer.add(Shape2);
+    layer.add(Shape1);
+    layer.add(arrow);
+    arrow.moveToTop();
+    layer.batchDraw();
+    
+  }
+  
 })
 
-
-/*
-combined.on('click', () => {
-  var textPostion = textbox.getAbsolutePosition();
-  var stageBox = stage.container().getBoundingClientRect();
-  var areaPostion = {
-    x: stageBox.left + textPosition.x,
-    y: stageBox.top + textPosition.y,
-  };
-  var textarea = document.createElement('textarea');
-  document.body.appendChild(textarea);
-
-  textarea.value = textbox.text();
-  textarea.style.position = 'absolute';
-  textarea.style.top = areaPosition.y + 'px';
-  textarea.style.left = areaPosition.x + 'px';
-  textarea.style.width = textbox.width();
-
-  textarea.focus();
-
-  textarea.addEventListener('keydown', function (e) {
-    if (e.keyCode === 13) {
-      textbox.text(textarea.value);
-      layer.draw();
-      document.body.removeChild(textarea);
-    }
-  });
-});
-*/
-
-
-
-
-// question: how do you identify each shape as an individual object? I need to select a specific shape and do things with it.
-
-
-
-function createLine(){
-  layer.on('dblclick', function(){
-    var obj1 = layer;
-    layer.on('click', function(){
-      var obj2 = layer;
-      connectLine(obj1, obj2);
-    })
-  })
-}
-
-var circle = new Konva.Circle({
-    x: stage.getWidth() / 2,
-    y: stage.getHeight() / 2,
-    radius: 40,
-    fill: 'green',
-    stroke: 'black',
-    strokeWidth: 2,
-    draggable: true
-  });
-
-var circleA = new Konva.Circle({
-    x: stage.getWidth() / 5,
-    y: stage.getHeight() / 5,
-    radius: 30,
-    fill: 'red',
-    stroke: 'black',
-    strokeWidth: 2,
-    draggable: true
-  });
-
-var arrow = new Konva.Arrow({
-    points: [circle.getX(), circle.getY(), circleA.getX(), circleA.getY()],
-    pointerLength: 10,
-    pointerWidth: 10,
-    fill: 'black',
-    stroke: 'black',
-    strokeWidth: 4
-  });
-
-function adjustPoint(e){
-    var p=[circle.getX(), circle.getY(), circleA.getX(), circleA.getY()];
-    arrow.setPoints(p);
-    layer.draw();
-  }
-
-circle.on('dragmove', adjustPoint);
-
-circleA.on('dragmove', adjustPoint);
-
-layer.add(circleA);
-  // add the shape to the layer
-layer.add(circle);
-layer.add(arrow);
-
-  // add the layer to the stage
 stage.add(layer);
 
