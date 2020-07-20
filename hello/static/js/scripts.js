@@ -92,7 +92,7 @@ stage.on('dblclick dbltap', function () {
   layer.add(combined);
   var pos = getRelativePointerPosition(group);
   var textbox = new Konva.Text({
-    text: 'Txt',
+    text: 'Text',
     fontSize: 15,
     fill: 'black',
     x: pos.x - 15,
@@ -175,6 +175,8 @@ layer.on('click tap', function(e){
     layer.add(arrow);
     layer.add(Shape2);
     layer.add(Shape1);
+    Shape2.moveToTop();
+    Shape1.moveToTop();
     layer.batchDraw();
     
   }
@@ -184,7 +186,7 @@ layer.on('click tap', function(e){
 stage.add(layer);
 
 // VVV zooming into shapes, still need to fix. VVV
-
+/*
 var zoomLevel = 2;
 layer.on('mouseenter', function () {
   layer.scale({
@@ -210,3 +212,4 @@ layer.on('mouseleave', function () {
   });
   layer.draw();
 });
+*/

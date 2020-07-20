@@ -3,28 +3,32 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: #080512;
-  /* background-color: #0f1018;  */
+  cursor: url('static/cursor.png')
+/* background-color: #0f1018;  */
 }
 
 head {
 height: 100vh;
-cursor: url('cursor.png');
+cursor: url('static/cursor.png');
 }
 
 #thesidenav a {
 position: absolute;
-left: -70px;
-transition: 0.3s;
+left: -80px;
+transition: 0.1s;
 padding: 15px;
 width: 100px;
 text-decoration: none;
 font-size: 20px;
 color: white;
 border-radius: 0 5px 5px 0;
+font-family: Arial, Helvetica, sans-serif;
 }
 
 #thesidenav a:hover {
 left: 0; /* On mouse-over, make the elements appear as they should */
+background-color: white;
+color: black;
 }
 
 #square {
@@ -40,4 +44,9 @@ background-color: #000000;
 #line {
 top: 140px;
 background-color: #000000; 
+}
+
+#delete {
+  top: 200px;
+  background-color: black;
 }
