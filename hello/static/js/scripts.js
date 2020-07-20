@@ -77,7 +77,7 @@ function createShape(shapeID) {
 
 increasingID = 0;
 
-stage.on('dblclick', function () {
+stage.on('dblclick dbltap', function () {
   var combined = new Konva.Group({
     draggable: true,
   });
@@ -108,6 +108,7 @@ stage.on('dblclick', function () {
       height: 60,
       fill: 'white',
       id: stringID,
+      shadowBlur: 25,
       draggable: true,
     });
     increasingID++;
@@ -118,8 +119,9 @@ stage.on('dblclick', function () {
       x: pos.x,
       y: pos.y,
       fill: 'white',
-      radius: 30,
+      radius: 60,
       id: stringID,
+      shadowBlur: 25,
       draggable: true,
     });
     increasingID++;
@@ -138,23 +140,7 @@ shapeCounter = 0;
 // if a shape is clicked:
 var arrayOfShapes = [];
 
-layer.on('click', function(e){
-  
-  // var txtobj2 = new Konva.Group({
-  //   //draggable: true,
-  // });
-  // var userInput = window.prompt("type whatever");
-  // var posi = getRelativePointerPosition(layer);
-  // var textInShape = new Konva.Text({
-  //   text: userInput,
-  //   fontSize: 15,
-  //   fill: 'black',
-  //   x: posi.x,
-  //   y: posi.y,
-  //   //draggable: true,
-  // });
-  // layer.add(textInShape);
-  // layer.batchDraw();
+layer.on('click tap', function(e){
   var selectedID = e.target.attrs.id;
   if (shapeCounter == 0) {
     var Shape1 = stage.findOne("#" + selectedID);
@@ -170,10 +156,11 @@ layer.on('click', function(e){
     var arrow = new Konva.Arrow({
       points: [Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()],
       pointerLength: 10,
-      pointerWidth: 10,
-      fill: 'black',
-      stroke: 'black',
-      strokeWidth: 4
+      pointerWidth: 15,
+      fill: 'white',
+      stroke: 'skyblue',
+      strokeWidth: 8,
+      opacity: 0.5
     });
 
     function adjustPoint(e){
@@ -185,10 +172,9 @@ layer.on('click', function(e){
     Shape1.on('dragmove', adjustPoint);
 
     Shape2.on('dragmove', adjustPoint);
+    layer.add(arrow);
     layer.add(Shape2);
     layer.add(Shape1);
-    layer.add(arrow);
-    arrow.moveToTop();
     layer.batchDraw();
     
   }
@@ -197,3 +183,30 @@ layer.on('click', function(e){
 
 stage.add(layer);
 
+// VVV zooming into shapes, still need to fix. VVV
+
+var zoomLevel = 2;
+layer.on('mouseenter', function () {
+  layer.scale({
+    x: zoomLevel,
+    y: zoomLevel,
+  });
+  layer.draw();
+});
+
+layer.on('mousemove', function (e) {
+  var pos = stage.getPointerPosition();
+  layer.x(-pos.x);
+  layer.y(-pos.y);
+  layer.draw();
+});
+
+layer.on('mouseleave', function () {
+  layer.x(0);
+  layer.y(0);
+  layer.scale({
+    x: 1,
+    y: 1,
+  });
+  layer.draw();
+});
