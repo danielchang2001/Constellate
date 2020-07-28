@@ -3,17 +3,20 @@
 <html>
   <head>
     <script src="https://unpkg.com/konva@7.0.0/konva.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stylelab.css' %}">
     <meta charset="utf-8" />
-    <title>Damocles</title>
+    <title>Constellate</title>
+    <link rel="shortcut icon" type="image/png" href="static/cancer.png">
   </head>
   <body>
     <div id="container"></div>
-    <script src="{% static 'js/scripts.js' %}" type=text/javascript></script>
+    <script src="{% static 'js/Devlab.js' %}" type=text/javascript></script>
+
     <div id="thesidenav" class="sidenav">
       <a href="#" id="square" onclick="createShape(this.id)">Square</a>
       <a href="#" id="circle" onclick="createShape(this.id)">Circle</a>
       <a href="#" id="line" onclick="createLine()">Line</a>
+      <a href='#' id="delete">Delete</a>
     </div>
   </body>
 </html>
