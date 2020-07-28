@@ -77,7 +77,7 @@ function createShape(shapeID) {
 
 increasingID = 0;
 
-stage.on('dblclick dbltap', function () {
+stage.on('dblclick', function () {
   var combined = new Konva.Group({
     draggable: true,
   });
