@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #080512;
+    background-color:black;
     cursor: url('static/cursor.png')
  /* background-color: #0f1018;  */
 }

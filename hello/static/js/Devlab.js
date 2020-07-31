@@ -45,6 +45,7 @@ function getRelativePointerPosition(node) {
   // now we can find relative point
   return transform.point(pos);
 }
+
 var scaleBy = 1.05;
 stage.on('wheel', (e) => {
   e.evt.preventDefault();
@@ -70,12 +71,18 @@ stage.on('wheel', (e) => {
   stage.batchDraw();
 });
 
+// ================================================== //
+// SECTION BELOW IS FOR CREATING NEW SHAPES (CIRCLE & SQUARE) //
+// ================================================== //
+
 // makes id of selected shape a global variable
 function createShape(shapeID) {
   window.idString = shapeID;
 }
 
 increasingID = 0;
+
+// event listener for creating new shapes:
 
 stage.on('dblclick dbltap', function () {
   var combined = new Konva.Group({
@@ -99,7 +106,7 @@ stage.on('dblclick dbltap', function () {
     y: pos.y - 5,
     //draggable: true,
   });
-  if (idString == 'square') {
+  if (idString == 'square') { // creates a square
     stringID = 'shape' + increasingID;
     var shape = new Konva.Rect({
       x: pos.x,
@@ -113,7 +120,7 @@ stage.on('dblclick dbltap', function () {
     });
     increasingID++;
   }
-  else if (idString == 'circle') {
+  else if (idString == 'circle') { // creates a circle
     stringID = 'shape' + increasingID;
     var shape = new Konva.Circle({
       x: pos.x,
@@ -134,56 +141,72 @@ stage.on('dblclick dbltap', function () {
   txtobj.moveToTop();
   layer.batchDraw();
 });
-// question: how to make text move with shape
-shapeCounter = 0;
 
-// if a shape is clicked:
-var arrayOfShapes = [];
+// ================================================== //
+// SECTION BELOW IS FOR CREATING LINES BETWEEN SHAPES //
+// ================================================== //
+
+shapeCounter = 0; // keeps track of which shape is selected first and second
+
+var linePressed = false; // variable for whether line button is pressed initialized
+
+// linePressed becomes true when the Line button is clicked in NavBar
+function createLine() {
+  linePressed = true;
+}
+
+var arrayOfShapes = []; // array used to store shapes outside of local scope.
+
+// When any shape is clicked:
 
 layer.on('click tap', function(e){
-  var selectedID = e.target.attrs.id;
-  if (shapeCounter == 0) {
-    var Shape1 = stage.findOne("#" + selectedID);
-    arrayOfShapes.push(Shape1);
-    shapeCounter++;
-  }
-  else {
-    var Shape1 = arrayOfShapes[0];
-    arrayOfShapes = [];
-    var Shape2 = stage.findOne("#" + selectedID);
-    shapeCounter = 0;
-
-    var arrow = new Konva.Arrow({
-      points: [Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()],
-      pointerLength: 10,
-      pointerWidth: 15,
-      fill: 'white',
-      stroke: 'skyblue',
-      strokeWidth: 8,
-      opacity: 0.5
-    });
-
-    function adjustPoint(e){
-      var p=[Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()];
-      arrow.setPoints(p);
-      layer.draw();
+  if (linePressed == true) { // if Line button pressed, do this. lse do nothing.
+    var selectedID = e.target.attrs.id;
+    if (shapeCounter == 0) { // if shape clicked is the first shape selected:
+      var Shape1 = stage.findOne("#" + selectedID);
+      arrayOfShapes.push(Shape1);
+      shapeCounter++;
     }
+    else { // if shape clicked is second shape selected:
+      var Shape1 = arrayOfShapes[0];
+      arrayOfShapes = [];
+      var Shape2 = stage.findOne("#" + selectedID);
+      shapeCounter = 0;
 
-    Shape1.on('dragmove', adjustPoint);
+      var arrow = new Konva.Arrow({
+        points: [Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()],
+        pointerLength: 10,
+        pointerWidth: 15,
+        fill: 'white',
+        stroke: 'skyblue',
+        strokeWidth: 8,
+        opacity: 0.5
+      });
 
-    Shape2.on('dragmove', adjustPoint);
-    layer.add(arrow);
-    layer.add(Shape2);
-    layer.add(Shape1);
-    Shape2.moveToTop();
-    Shape1.moveToTop();
-    layer.batchDraw();
-    
+      function adjustPoint(e){
+        var p=[Shape1.getX(), Shape1.getY(), Shape2.getX(), Shape2.getY()];
+        arrow.setPoints(p);
+        layer.draw();
+      }
+
+      Shape1.on('dragmove', adjustPoint);
+
+      Shape2.on('dragmove', adjustPoint);
+      layer.add(arrow);
+      layer.add(Shape2);
+      layer.add(Shape1);
+      Shape2.moveToTop();
+      Shape1.moveToTop();
+      layer.batchDraw();
+      linePressed = false; // resets linePressed variable
+    }
   }
-  
-})
-
+})  
 stage.add(layer);
+
+// ================================================== //
+// ================================================== //
+// ================================================== //
 
 // VVV zooming into shapes, still need to fix. VVV
 /*
