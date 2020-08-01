@@ -166,6 +166,9 @@ layer.on('click tap', function(e){
       var Shape1 = stage.findOne("#" + selectedID);
       arrayOfShapes.push(Shape1);
       shapeCounter++;
+      document.getElementById('alrt').innerHTML='<b>Please wait, Your download will start soon!!!</b>'; 
+      setTimeout(function() {document.getElementById('alrt').innerHTML='';},5000);
+
     }
     else { // if shape clicked is second shape selected:
       var Shape1 = arrayOfShapes[0];
@@ -200,6 +203,9 @@ layer.on('click tap', function(e){
       layer.batchDraw();
       linePressed = false; // resets linePressed variable
     }
+  }
+  else {
+    
   }
 })  
 stage.add(layer);

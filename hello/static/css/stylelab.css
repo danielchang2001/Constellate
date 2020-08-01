@@ -11,26 +11,28 @@ head {
   height: 100vh;
   cursor: url('static/cursor.png');
 }
-  
+
 #thesidenav a {
   position: absolute;
-  left: -80px;
+  left: 0px;
   transition: 0.1s;
   padding: 15px;
-  width: 100px;
+  width: 70px;
   text-decoration: none;
+  text-align: left;
   font-size: 20px;
+  font-weight: bold;
   color: white;
   border-radius: 0 5px 5px 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
 }
   
 #thesidenav a:hover {
-  left: 0; /* On mouse-over, make the elements appear as they should */
+  left: 15px; /* On mouse-over, make the elements appear as they should */
   background-color: white;
   color: black;
 }
-  
+
 #square {
   top: 20px;
   background-color: #000000;
